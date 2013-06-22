@@ -16,6 +16,8 @@ public class baaGame implements ApplicationListener {
 	private Texture texture;
 	private Sprite sprite;
 	
+	Texture basicUnit;
+	
 	@Override
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
@@ -33,6 +35,9 @@ public class baaGame implements ApplicationListener {
 		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
+		
+		// Load basic placeholder image
+		basicUnit = new Texture(Gdx.files.internal("baa/assets/unit.png"));
 	}
 
 	@Override
@@ -43,7 +48,7 @@ public class baaGame implements ApplicationListener {
 
 	@Override
 	public void render() {		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(1, 0, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		batch.setProjectionMatrix(camera.combined);
