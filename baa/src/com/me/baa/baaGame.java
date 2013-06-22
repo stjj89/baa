@@ -22,6 +22,7 @@ public class baaGame implements ApplicationListener {
 	
 	@Override
 	public void create() {		
+		// Sam's test commit
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
