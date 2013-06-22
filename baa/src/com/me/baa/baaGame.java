@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class baaGame implements ApplicationListener {
 	private OrthographicCamera camera;
@@ -17,6 +18,7 @@ public class baaGame implements ApplicationListener {
 	private Sprite sprite;
 	
 	Texture basicUnit;
+	Rectangle unit;
 	
 	@Override
 	public void create() {		
@@ -37,7 +39,12 @@ public class baaGame implements ApplicationListener {
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 		
 		// Load basic placeholder image
-		basicUnit = new Texture(Gdx.files.internal("baa/assets/unit.png"));
+		basicUnit = new Texture(Gdx.files.internal("data/unit.png"));
+		unit = new Rectangle();
+		unit.x = w/2;
+		unit.y = h/2;
+		unit.width = 32;
+		unit.height = 32;
 	}
 
 	@Override
@@ -54,6 +61,7 @@ public class baaGame implements ApplicationListener {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		sprite.draw(batch);
+		batch.draw(basicUnit, unit.x, unit.y);
 		batch.end();
 	}
 
