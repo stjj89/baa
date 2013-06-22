@@ -10,7 +10,7 @@ public class Main {
 		cfg.useGL20 = false;
 		cfg.width = 480;
 		cfg.height = 320;
-		//My first change
+		//My first change - Ant
 		new LwjglApplication(new baaGame(), cfg);
 	}
 }
