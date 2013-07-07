@@ -240,6 +240,8 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 
 	@Override
 	public boolean mouseMoved (int x, int y) {
+		archerGame.rotate(x, y);
+		
 		return false;
 	}
 

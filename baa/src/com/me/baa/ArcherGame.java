@@ -35,6 +35,11 @@ public class ArcherGame extends Table {
 		playerArcher.setPosition(playerArcher.getX() + dx, playerArcher.getY() + dy);
 	}
 	
+	public void rotate(int x, int y)
+	{
+		playerArcher.rotate(x, y);
+	}
+
 	@Override
 	public void act(float delta)
 	{

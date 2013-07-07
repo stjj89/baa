@@ -1,6 +1,7 @@
 package com.me.baa;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,7 +18,8 @@ public class PlayerArcher extends Actor {
 		this.archerGame = archerGame;
 		setWidth(32);
 		setHeight(32);
-		setPosition( archerGame.getWidth() / 2, archerGame.getHeight() / 2); // Start in enter of screen
+		this.setOrigin( getWidth()/2, getHeight()/2 ); // Origin is the center of the sprite
+		setPosition( archerGame.getWidth() / 2, archerGame.getHeight() / 2); // Start in center of screen
 		setColor(Color.WHITE);
 		charge = 0;
 		sprite = new AnimatedSprite(6, 5, Assets.testanim );
@@ -28,6 +30,12 @@ public class PlayerArcher extends Actor {
 	{
 		double distanceMoved = Math.sqrt( (Math.pow( newX - oldX, 2 ) + Math.pow( newY - oldY, 2 ) ) );
 		// TODO
+	}
+	
+	public void rotate(int x, int y)
+	{
+		// System.out.println("Origin X=" + this.getOriginX() + " Origin Y=" + this.getOriginY());
+		System.out.println( ( MathUtils.atan2( x - (getX() + 16), y - (getY() + 16) ) ) * (180/Math.PI) );
 	}
 	
 	@Override
