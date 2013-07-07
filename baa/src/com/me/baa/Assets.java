@@ -10,14 +10,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Assets {
 	public static TextureAtlas atlas;
-	public static TextureRegion unit, unit2;
-
+	public static TextureRegion unit;
+	public static TextureRegion arrow;
+	public static TextureRegion powerBar;
+	public static TextureRegion background;
+	
 	public static void load() {
 		// Find atlas
 		atlas = new TextureAtlas(Gdx.files.internal("images.pack"));
 		
 		// Load assets
-		unit = atlas.findRegion("unit");
+		unit 		= atlas.findRegion("unit");
+		arrow 		= atlas.findRegion("arrow");
+		powerBar 	= atlas.findRegion("powerBar");
+		background 	= atlas.findRegion("sampleLevel");
 	}
 
 	public static void dispose() {

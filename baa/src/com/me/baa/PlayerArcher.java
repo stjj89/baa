@@ -9,15 +9,24 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class PlayerArcher extends Actor {
 	private ArcherGame archerGame;
 	private Rectangle bounds = new Rectangle();
-	
+	private Bow bow;
+	private float charge;							// Amount of charge player has in drawn bow
+
 	public PlayerArcher(ArcherGame archerGame) {
 		this.archerGame = archerGame;
 		setWidth(32);
 		setHeight(32);
 		setPosition( archerGame.getWidth() / 2, archerGame.getHeight() / 2); // Start in enter of screen
-		setColor(Color.YELLOW); // Can we change this color?
+		setColor(Color.WHITE);
+		charge = 0;
 	}
 
+	public void updateCharge(int oldX, int oldY, int newX, int newY)
+	{
+		double distanceMoved = Math.sqrt( (Math.pow( newX - oldX, 2 ) + Math.pow( newY - oldY, 2 ) ) );
+		// TODO
+	}
+	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -38,31 +47,31 @@ public class PlayerArcher extends Actor {
 		bounds.set(getX(), getY(), getWidth(), getHeight());
 	}
 
-//	public void tryMoveUp() {
-//		if ((getActions().size == 0) && (lane != 2))
-//			moveToLane(lane + 1);
-//	}
-//
-//	public void tryMoveDown() {
-//		if ((getActions().size == 0) && (lane != 0))
-//			moveToLane(lane - 1);
-//	}
-//
-//	private void moveToLane(int lane) {
-//		this.lane = lane;
-//
-//		switch (lane) {
-//		case 0:
-//			addAction(moveTo(getX(), archerGame.lane0 - getHeight() / 2, 0.5f));
-//			break;
-//		case 1:
-//			addAction(moveTo(getX(), archerGame.lane1 - getHeight() / 2, 0.5f));
-//			break;
-//		case 2:
-//			addAction(moveTo(getX(), archerGame.lane2 - getHeight() / 2, 0.5f));
-//			break;
-//		}
-//	}
+	//	public void tryMoveUp() {
+	//		if ((getActions().size == 0) && (lane != 2))
+	//			moveToLane(lane + 1);
+	//	}
+	//
+	//	public void tryMoveDown() {
+	//		if ((getActions().size == 0) && (lane != 0))
+	//			moveToLane(lane - 1);
+	//	}
+	//
+	//	private void moveToLane(int lane) {
+	//		this.lane = lane;
+	//
+	//		switch (lane) {
+	//		case 0:
+	//			addAction(moveTo(getX(), archerGame.lane0 - getHeight() / 2, 0.5f));
+	//			break;
+	//		case 1:
+	//			addAction(moveTo(getX(), archerGame.lane1 - getHeight() / 2, 0.5f));
+	//			break;
+	//		case 2:
+	//			addAction(moveTo(getX(), archerGame.lane2 - getHeight() / 2, 0.5f));
+	//			break;
+	//		}
+	//	}
 
 	public Rectangle getBounds() {
 		return bounds;

@@ -3,16 +3,30 @@ images.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-unit
+sampleLevel
   rotate: false
-  xy: 1, 1
+  xy: 1, 165
+  size: 1280, 768
+  orig: 1280, 768
+  offset: 0, 0
+  index: -1
+powerBar
+  rotate: false
+  xy: 1, 35
+  size: 32, 128
+  orig: 32, 128
+  offset: 0, 0
+  index: -1
+arrow
+  rotate: false
+  xy: 1283, 901
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-unit2
+unit
   rotate: false
-  xy: 35, 1
+  xy: 1, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -1,5 +1,7 @@
 package com.me.baa;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -14,6 +16,10 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	private Stage stage;
 	private ArcherGame archerGame;
 	private boolean wPressed, aPressed, sPressed, dPressed;
+	private boolean mousePressed;
+	private float pressedX, pressedY;							// Coordinates of mouse press
+	private float bowCharge;									// % of bow charged [0-100]
+	//public static ArrayList<Arrow> arrows;						// All arrows in the game
 
 	public GameScreen() {
 		stage = new Stage();
@@ -23,6 +29,9 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 		aPressed = false;
 		sPressed = false;
 		dPressed = false;
+		mousePressed = false;
+		pressedX = 0.0f;
+		pressedY = 0.0f;
 	}
 
 	public void resize(int width, int height) {
@@ -38,10 +47,20 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 		stage.act(delta);
 		stage.draw();
 		if ( wPressed || aPressed || sPressed || dPressed )
-			keyboardInputHandler();
+			keyboardPressedHandler();
+		if ( mousePressed )
+			mousePressedHandler();
+		
+		
+		// Draw
 	}
 	
-	private void keyboardInputHandler()
+	private void mousePressedHandler()
+	{
+		
+	}
+	
+	private void keyboardPressedHandler()
 	{
 		float dx = 0;
 		float dy = 0;
@@ -185,17 +204,32 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	}
 
 	@Override
-	public boolean keyTyped (char character) {
+	public boolean keyTyped (char character)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean touchDown (int x, int y, int pointer, int button) {
+	// Note: x and y wrt origin on the top left
+	public boolean touchDown (int x, int y, int pointer, int button)
+	{
+		mousePressed = true;
+		pressedX = x;
+		pressedY = -y; // To be consistent with movement y axis
+		
+		//System.out.println("pressedX=" + pressedX + " pressedY=" + pressedY);
+		
 		return false;
 	}
 
 	@Override
-	public boolean touchUp (int x, int y, int pointer, int button) {
+	public boolean touchUp (int x, int y, int pointer, int button)
+	{
+		
+		mousePressed = false;
+		pressedX = 0.0f;
+		pressedY = 0.0f;
+		
 		return false;
 	}
 

@@ -10,25 +10,18 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class ArcherGame extends Table {
-	private Actor backgroundStage;
+	private BackgroundLevel background;
 //	private Array<EnemyArcher> enemyArchers;
-//	private long lastCarTime = 0;
-//	public final float lane2 = 390;
-//	public final float lane1 = 240;
-//	public final float lane0 = 90;
 	private PlayerArcher playerArcher;
 
 	public ArcherGame()
 	{
-		setBounds(0, 0, 800, 480);
+		setBounds(0, 0, baaGame.WIDTH, baaGame.HEIGHT);
 		setClip(true);
 		
 		// Initialize the background
-		backgroundStage = new Actor();
-		backgroundStage.setWidth(getWidth());
-		backgroundStage.setHeight(getHeight());
-		backgroundStage.setPosition(getWidth(), 0);
-		addActor(backgroundStage);
+		background = new BackgroundLevel( getWidth(), getHeight(), Assets.background );
+		addActor(background);
 		
 		// Initialize player and enemies
 		playerArcher = new PlayerArcher(this);

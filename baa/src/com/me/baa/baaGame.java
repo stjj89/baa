@@ -15,8 +15,8 @@ import com.badlogic.gdx.Game;
 
 public class baaGame extends Game {
 	// New stuff
-	public final static int WIDTH = 800;
-	public final static int HEIGHT = 480;
+	public final static int WIDTH = 1280;
+	public final static int HEIGHT = 768;
 	private GameScreen gameScreen;
 
 	// Old stuff
