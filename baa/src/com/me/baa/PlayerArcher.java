@@ -11,7 +11,8 @@ public class PlayerArcher extends Actor {
 	private Rectangle bounds = new Rectangle();
 	private Bow bow;
 	private float charge;							// Amount of charge player has in drawn bow
-
+	private AnimatedSprite sprite;
+	
 	public PlayerArcher(ArcherGame archerGame) {
 		this.archerGame = archerGame;
 		setWidth(32);
@@ -19,6 +20,8 @@ public class PlayerArcher extends Actor {
 		setPosition( archerGame.getWidth() / 2, archerGame.getHeight() / 2); // Start in enter of screen
 		setColor(Color.WHITE);
 		charge = 0;
+		sprite = new AnimatedSprite(6, 5, Assets.testanim );
+		sprite.changeUpdateRate(0.1f);
 	}
 
 	public void updateCharge(int oldX, int oldY, int newX, int newY)
@@ -36,10 +39,12 @@ public class PlayerArcher extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);
-		batch.draw( Assets.unit,
-				getX(), getY(), 
-				/*getWidth() / 2, getHeight() / 2*/ 0, 0 , /* these are offsets, might need to change */
-				getWidth(), getHeight(), 1, 1, getRotation());
+		sprite.update();
+		sprite.draw( batch, parentAlpha, this );
+//		batch.draw( Assets.unit,
+//				getX(), getY(), 
+//				/*getWidth() / 2, getHeight() / 2*/ 0, 0 , /* these are offsets, might need to change */
+//				getWidth(), getHeight(), 1, 1, getRotation());
 	}
 
 	// Might not need this anymore

@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+*.gwt-log
 *.pydevproject
 #.project
 .metadata
