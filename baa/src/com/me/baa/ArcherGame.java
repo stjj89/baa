@@ -13,6 +13,9 @@ public class ArcherGame extends Table {
 	private BackgroundLevel background;
 //	private Array<EnemyArcher> enemyArchers;
 	private PlayerArcher playerArcher;
+	
+	private Array<Projectile> projectiles = new Array<Projectile>();
+	private Projectile testp;
 
 	public ArcherGame()
 	{
@@ -26,6 +29,10 @@ public class ArcherGame extends Table {
 		// Initialize player and enemies
 		playerArcher = new PlayerArcher(this);
 		addActor(playerArcher);
+		
+		//Test projectile. X, Y, Bearing (counter-clockwise) in DEGREES
+		testp = new Projectile(this, 250, 250, -20f);
+		addActor(testp);
 //		enemyArchers = new Array<EnemyArcher>();
 	}
 
