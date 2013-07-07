@@ -13,9 +13,11 @@ public class ArcherGame extends Table {
 	private BackgroundLevel background;
 //	private Array<EnemyArcher> enemyArchers;
 	private PlayerArcher playerArcher;
-	
 	private Array<Projectile> projectiles = new Array<Projectile>();
 	private Projectile testp;
+	public boolean wPressed, aPressed, sPressed, dPressed;
+	public boolean pressed;
+	public float pressedX, pressedY, currentX, currentY;
 
 	public ArcherGame()
 	{
@@ -34,9 +36,14 @@ public class ArcherGame extends Table {
 		testp = new Projectile(this, 250, 250, -20f);
 		addActor(testp);
 //		enemyArchers = new Array<EnemyArcher>();
+		
+		// Initialize input flags and saved values
+		wPressed = aPressed = sPressed = dPressed = false;
+		pressedX = pressedY = currentX = currentY = 0.0f;
 	}
 
 	// TODO: possibly optimize
+	// TODO: collision
 	public void movePlayer (float dx, float dy)
 	{
 		playerArcher.setPosition(playerArcher.getX() + dx, playerArcher.getY() + dy);
@@ -52,6 +59,9 @@ public class ArcherGame extends Table {
 	{
 		super.act(delta);
 
+		// Propose moves
+		
+		
 //		if (TimeUtils.nanoTime() - lastCarTime > 3000000000f)
 //			spawnCar();
 

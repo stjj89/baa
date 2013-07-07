@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameScreen implements Screen, GestureListener, InputProcessor {
@@ -19,7 +20,7 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	private boolean mousePressed;
 	private float pressedX, pressedY;							// Coordinates of mouse press
 	private float bowCharge;									// % of bow charged [0-100]
-	//public static ArrayList<Arrow> arrows;						// All arrows in the game
+	//public static ArrayList<Arrow> arrows;					// All arrows in the game
 
 	public GameScreen() {
 		stage = new Stage();
@@ -46,43 +47,10 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
-		if ( wPressed || aPressed || sPressed || dPressed )
-			keyboardPressedHandler();
-		if ( mousePressed )
-			mousePressedHandler();
-		
 		
 		// Draw
 	}
 	
-	private void mousePressedHandler()
-	{
-		
-	}
-	
-	private void keyboardPressedHandler()
-	{
-		float dx = 0;
-		float dy = 0;
-		float moveDelta = 4.0f;
-		
-		if (wPressed)
-			dy = moveDelta;
-		if (aPressed)
-			dx = -moveDelta;
-		if (sPressed)
-			dy = -moveDelta;
-		if (dPressed)
-			dx = moveDelta;
-		
-		if ( (0 != dx) || (0 != dy) )
-		{
-			dx *= 0.7071; // 1/sqrt(2)
-			dy *= 0.7071; // 1/sqrt(2)
-		}
-		
-		archerGame.movePlayer(dx, dy);
-	}
 
 	@Override
 	public void show() {
@@ -160,47 +128,56 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	 */
 
 	@Override
-	public boolean keyDown (int keycode) {
-		
+	public boolean keyDown (int keycode)
+	{	
 		switch (keycode)
 		{
 		case Input.Keys.W:
-			wPressed = true;
+			archerGame.wPressed = true;
+			//wPressed = true;
 			break;
 		case Input.Keys.A:
-			aPressed = true;
+			archerGame.aPressed = true;
+			//aPressed = true;
 			break;
 		case Input.Keys.S:
-			sPressed = true;
+			archerGame.sPressed = true;
+			//sPressed = true;
 			break;
 		case Input.Keys.D:
-			dPressed = true;
+			archerGame.dPressed = true;
+			//dPressed = true;
 			break;
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override
-	public boolean keyUp (int keycode) {
+	public boolean keyUp (int keycode)
+	{
 		
 		switch (keycode)
 		{
 		case Input.Keys.W:
-			wPressed = false;
+			archerGame.wPressed = false;
+			//wPressed = false;
 			break;
 		case Input.Keys.A:
-			aPressed = false;
+			archerGame.aPressed = false;
+			//aPressed = false;
 			break;
 		case Input.Keys.S:
-			sPressed = false;
+			archerGame.sPressed = false;
+			//sPressed = false;
 			break;
 		case Input.Keys.D:
-			dPressed = false;
+			archerGame.dPressed = false;
+			//dPressed = false;
 			break;
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override
@@ -213,24 +190,45 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	// Note: x and y wrt origin on the top left
 	public boolean touchDown (int x, int y, int pointer, int button)
 	{
-		mousePressed = true;
-		pressedX = x;
-		pressedY = -y; // To be consistent with movement y axis
+		archerGame.pressed = true;
 		
-		//System.out.println("pressedX=" + pressedX + " pressedY=" + pressedY);
+		// Transform screen coordinates to world coordinates
+		Vector3 pos = new Vector3(x, y, 0);
+		stage.getCamera().unproject(pos);
+		//System.out.println("transforemd: x = " + pos.x + ", y = " + (baaGame.HEIGHT - pos.y));
+		pos.y = baaGame.HEIGHT - pos.y;
 		
-		return false;
+		// Do not give coordinates in black bar areas
+		if (pos.x < 0)
+			archerGame.pressedX = 0;
+		else if (pos.x > baaGame.WIDTH)
+			archerGame.pressedX = baaGame.WIDTH;
+		else
+			archerGame.pressedX = pos.x;
+		
+		if (pos.y < 0)
+			archerGame.pressedY = 0;
+		else if (pos.y > baaGame.HEIGHT)
+			archerGame.pressedY = baaGame.HEIGHT;
+		else
+			archerGame.pressedY = pos.y;
+	
+		
+		return true;
 	}
 
 	@Override
 	public boolean touchUp (int x, int y, int pointer, int button)
 	{
+		archerGame.pressed = false;
+		archerGame.pressedX = 0.0f;
+		archerGame.pressedY = 0.0f;
 		
-		mousePressed = false;
-		pressedX = 0.0f;
-		pressedY = 0.0f;
+//		mousePressed = false;
+//		pressedX = 0.0f;
+//		pressedY = 0.0f;
 		
-		return false;
+		return true;
 	}
 
 	@Override
@@ -239,10 +237,29 @@ public class GameScreen implements Screen, GestureListener, InputProcessor {
 	}
 
 	@Override
-	public boolean mouseMoved (int x, int y) {
-		archerGame.rotate(x, y);
+	public boolean mouseMoved (int x, int y) {	
+		// Transform screen coordinates to world coordinates
+		Vector3 pos = new Vector3(x, y, 0);
+		stage.getCamera().unproject(pos);
+		//System.out.println("transforemd: x = " + pos.x + ", y = " + (baaGame.HEIGHT - pos.y));
+		pos.y = baaGame.HEIGHT - pos.y;
 		
-		return false;
+		// Do not give coordinates in black bar areas
+		if (pos.x < 0)
+			archerGame.currentX = 0;
+		else if (pos.x > baaGame.WIDTH)
+			archerGame.currentX = baaGame.WIDTH;
+		else
+			archerGame.currentX = pos.x;
+		
+		if (pos.y < 0)
+			archerGame.currentY = 0;
+		else if (pos.y > baaGame.HEIGHT)
+			archerGame.currentY = baaGame.HEIGHT;
+		else
+			archerGame.currentY = pos.y;
+		
+		return true;
 	}
 
 	@Override
