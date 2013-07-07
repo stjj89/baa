@@ -35,7 +35,9 @@ public class PlayerArcher extends Actor {
 	public void rotate(int x, int y)
 	{
 		// System.out.println("Origin X=" + this.getOriginX() + " Origin Y=" + this.getOriginY());
-		System.out.println( ( MathUtils.atan2( x - (getX() + 16), y - (getY() + 16) ) ) * (180/Math.PI) );
+		System.out.println("x=" + x + " y=" + y);
+		System.out.println("MiddleX=" + (getX() + 16) + " MiddleY=" + (getY() + 16));
+		System.out.println( ( MathUtils.atan2( y - (getY() + 16), x - (getX() + 16) ) ) * (180/Math.PI) );
 	}
 	
 	@Override

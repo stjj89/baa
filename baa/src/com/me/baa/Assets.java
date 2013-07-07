@@ -14,8 +14,7 @@ public class Assets {
 	public static TextureRegion arrow;
 	public static TextureRegion powerBar;
 	public static TextureRegion background;
-
-	public static TextureRegion unit, unit2, testanim;
+	public static TextureRegion testanim;
 
 	public static void load() {
 		// Find atlas
